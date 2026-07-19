@@ -1,0 +1,36 @@
+.text-type{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    width:fit-content;
+    position:relative;
+
+    font-weight:700;
+    line-height:1.1;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+}
+
+.text-type__content{
+    display:inline-block;
+    color:inherit;
+}
+
+.text-type__cursor{
+    display:inline-block;
+
+    margin-left:4px;
+
+    color:inherit;
+
+    font-weight:700;
+
+    user-select:none;
+}
+
+.text-type__cursor--hidden{
+    opacity:0;
+}
