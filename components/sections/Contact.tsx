@@ -247,26 +247,6 @@ export default function Contact() {
 
                     </a>
 
-                    <a
-                      href="https://instagram.com/robysunjaya"
-                      target="_blank"
-                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
-                    >
-                      <FaInstagram className="text-3xl text-[#E4405F]" />
-                      <div>
-
-                        <h4 className="font-bold">
-                          Instagram
-                        </h4>
-
-                        <p className="text-sm text-slate-500">
-                          @robysunjaya
-                        </p>
-
-                      </div>
-
-                    </a>
-
                   </div>
 
                   <a
