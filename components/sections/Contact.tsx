@@ -190,14 +190,14 @@ export default function Contact() {
 
                 {/* RIGHT */}
 
-                <div className="flex flex-col justify-center">
+                <div className="mx-auto flex w-full max-w-md flex-col justify-center">
 
                   <div className="space-y-5">
 
                     <a
                       href="https://github.com/robysunjaya20"
                       target="_blank"
-                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
+                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-4 sm:p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
                       <FaGithub className="text-2xl sm:text-3xl" />
 
@@ -239,28 +239,23 @@ export default function Contact() {
                   </div>
 
                   <a
-                    href="mailto:robysunjaya9@gmail.com"
                     className="
                       mt-8
+                      mx-auto
                       flex
                       w-full
+                      max-w-md
                       items-center
                       justify-center
                       rounded-2xl
                       bg-pink-500
                       px-6
-                      py-3.5
-                      text-base
+                      py-4
                       font-semibold
                       text-white
                       transition-all
                       duration-300
-
                       hover:bg-pink-600
-                      hover:scale-[1.02]
-
-                      sm:mt-10
-                      sm:py-4
                     "
                   >
                     Kirim Email
