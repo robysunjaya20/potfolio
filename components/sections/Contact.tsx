@@ -190,24 +190,24 @@ export default function Contact() {
 
                 {/* RIGHT */}
 
-                <div className="mx-auto flex w-full max-w-md flex-col justify-center">
+                <div className="mx-auto flex w-full max-w-sm flex-col justify-center lg:max-w-md">
 
                   <div className="space-y-5">
 
                     <a
                       href="https://github.com/robysunjaya20"
                       target="_blank"
-                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-4 sm:p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
+                      className="contact-item flex items-center gap-3 rounded-xl border border-slate-200 p-3.5 sm:gap-4 sm:rounded-2xl sm:p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
-                      <FaGithub className="text-2xl sm:text-3xl" />
+                      <FaGithub className="text-xl sm:text-3xl shrink-0" />
 
                       <div className="min-w-0">
 
-                        <h4 className="font-bold">
+                        <h4 className="text-base font-semibold sm:text-lg">
                           GitHub
                         </h4>
 
-                        <p className="truncate text-sm text-slate-500">
+                        <p className="text-xs text-slate-500 sm:text-sm truncate">
                           github.com/robysunjaya20
                         </p>
 
@@ -220,15 +220,15 @@ export default function Contact() {
                       target="_blank"
                       className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
-                      <FaLinkedin className="text-2xl text-[#0A66C2] sm:text-3xl" />
+                      <FaLinkedin className="text-xl text-[#0A66C2] sm:text-3xl shrink-0" />
 
                       <div className="min-w-0">
 
-                        <h4 className="font-bold">
+                        <h4 className="text-base font-semibold sm:text-lg">
                           LinkedIn
                         </h4>
 
-                        <p className="truncate text-sm text-slate-500">
+                        <p className="text-xs text-slate-500 sm:text-sm truncate">
                           linkedin.com/in/roby-sunjaya-955798251
                         </p>
 
@@ -239,23 +239,27 @@ export default function Contact() {
                   </div>
 
                   <a
+                    href="mailto:robysunjaya9@gmail.com"
                     className="
-                      mt-8
-                      mx-auto
+                      mt-6
                       flex
+                      h-12
                       w-full
-                      max-w-md
                       items-center
                       justify-center
-                      rounded-2xl
+                      rounded-xl
                       bg-pink-500
-                      px-6
-                      py-4
+                      text-sm
                       font-semibold
                       text-white
                       transition-all
                       duration-300
                       hover:bg-pink-600
+
+                      sm:mt-8
+                      sm:h-14
+                      sm:rounded-2xl
+                      sm:text-base
                     "
                   >
                     Kirim Email
