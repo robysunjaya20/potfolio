@@ -61,7 +61,7 @@ export default function Hero() {
         "
       >
         {/* LEFT */}
-        <div className="flex-1 text-center lg:text-left">
+        <div className="flex flex-1 flex-col items-center text-center lg:items-start lg:text-left">
 
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-slate-300 sm:text-base">
             Halo, Saya
