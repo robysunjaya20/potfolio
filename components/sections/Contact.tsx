@@ -93,11 +93,11 @@ export default function Contact() {
 
             <div className="rounded-[28px] bg-white p-6 sm:p-8 md:p-10">
 
-              <div className="grid gap-12 lg:grid-cols-2">
+              <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
 
                 {/* LEFT */}
 
-                <div>
+                <div className="text-center lg:text-left">
 
                   <h3 className="text-2xl font-bold md:text-3xl">
                     Hubungi Saya
@@ -113,7 +113,7 @@ export default function Contact() {
 
                     {/* Gmail */}
 
-                    <div className="contact-item flex items-start gap-4">
+                    <div className="contact-item flex items-center gap-4 text-left">
 
                       <div className="rounded-xl bg-pink-100 p-3">
                         <Mail className="text-pink-500" />
@@ -138,7 +138,7 @@ export default function Contact() {
 
                     {/* Whatsapp */}
 
-                    <div className="contact-item flex items-start gap-4">
+                    <div className="contact-item flex items-center gap-4 text-left">
 
                       <div className="rounded-xl bg-pink-100 p-3">
                         <Phone className="text-pink-500" />
@@ -164,9 +164,9 @@ export default function Contact() {
 
                     {/* Location */}
 
-                    <div className="contact-item flex items-start gap-4">
+                    <div className="contact-item flex items-center gap-4 text-left">
 
-                      <div className="rounded-xl bg-pink-100 p-3">
+                      <div className="rounded-xl bg-pink-100 p-2.5 sm:p-3">
                         <MapPin className="text-pink-500" />
                       </div>
 
@@ -199,7 +199,7 @@ export default function Contact() {
                       target="_blank"
                       className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
-                      <FaGithub className="text-3xl" />
+                      <FaGithub className="text-2xl sm:text-3xl" />
 
                       <div className="min-w-0">
 
@@ -220,7 +220,7 @@ export default function Contact() {
                       target="_blank"
                       className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
-                      <FaLinkedin className="text-3xl text-[#0A66C2]" />
+                      <FaLinkedin className="text-2xl text-[#0A66C2] sm:text-3xl" />
 
                       <div className="min-w-0">
 
@@ -241,21 +241,26 @@ export default function Contact() {
                   <a
                     href="mailto:robysunjaya9@gmail.com"
                     className="
-                      mt-10
-                      inline-flex
+                      mt-8
+                      flex
+                      w-full
                       items-center
                       justify-center
                       rounded-2xl
                       bg-pink-500
-                      px-8
-                      py-4
+                      px-6
+                      py-3.5
                       text-base
                       font-semibold
                       text-white
                       transition-all
                       duration-300
-                      hover:scale-105
+
                       hover:bg-pink-600
+                      hover:scale-[1.02]
+
+                      sm:mt-10
+                      sm:py-4
                     "
                   >
                     Kirim Email
