@@ -67,7 +67,7 @@ export default function Hero() {
             Halo, Saya
           </p>
 
-          <h1 className="leading-none">
+          <h1 className="leading-none text-center lg:text-left">
             <GradientText
               colors={["#5227FF", "#FF9FFC"]}
               animationSpeed={2}

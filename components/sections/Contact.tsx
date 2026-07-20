@@ -48,17 +48,6 @@ export default function Contact() {
         },
       });
 
-      gsap.from(".contact-item", {
-        y: 30,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        },
-      });
     }, sectionRef);
 
     return () => ctx.revert();
