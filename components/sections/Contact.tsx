@@ -1,5 +1,10 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import ElectricBorder from "@/components/animate/ElectricBorder";
 
 import {
@@ -8,28 +13,77 @@ import {
   MapPin,
 } from "lucide-react";
 
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+} from "react-icons/fa6";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".contact-title", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+      });
+
+      gsap.from(".contact-card", {
+        y: 80,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.from(".contact-item", {
+        y: 30,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="contact"
-      className="bg-white py-32"
+      className="bg-white py-20 md:py-32"
     >
-      <div className="mx-auto max-w-5xl px-8">
+      <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
 
         {/* Header */}
 
-        <div className="text-center">
+        <div className="contact-title text-center">
 
-          <h2 className="mt-4 text-5xl font-black text-slate-900 md:text-6xl">
+          <h2 className="text-4xl font-black text-slate-900 sm:text-5xl md:text-6xl">
             Mari{" "}
             <span className="text-pink-500">
               Bekerja Sama
             </span>
           </h2>
 
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-9 text-slate-600">
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 md:text-lg md:leading-9">
             Saya terbuka untuk peluang kerja sebagai IT Support,
             IT Infrastructure, Networking, Web Development,
             maupun kolaborasi dalam berbagai project teknologi.
@@ -37,9 +91,9 @@ export default function Contact() {
 
         </div>
 
-        {/* Contact Card */}
+        {/* Card */}
 
-        <div className="mt-20">
+        <div className="contact-card mt-12 md:mt-20">
 
           <ElectricBorder
             color="#ec4899"
@@ -48,40 +102,43 @@ export default function Contact() {
             style={{ borderRadius: 28 }}
           >
 
-            <div className="rounded-[28px] bg-white p-10">
+            <div className="rounded-[28px] bg-white p-6 sm:p-8 md:p-10">
 
-              <div className="grid gap-10 md:grid-cols-2">
+              <div className="grid gap-12 lg:grid-cols-2">
 
                 {/* LEFT */}
 
                 <div>
 
-                  <h3 className="text-3xl font-bold">
+                  <h3 className="text-2xl font-bold md:text-3xl">
                     Hubungi Saya
                   </h3>
 
                   <p className="mt-5 leading-8 text-slate-600">
-                    Jangan ragu menghubungi saya apabila ingin
-                    berdiskusi mengenai project, peluang kerja,
-                    maupun kolaborasi di bidang teknologi.
+                    Jangan ragu menghubungi saya apabila ingin berdiskusi
+                    mengenai project, peluang kerja maupun kolaborasi
+                    di bidang teknologi.
                   </p>
 
                   <div className="mt-10 space-y-6">
 
-                    <div className="flex items-center gap-4">
+                    {/* Gmail */}
+
+                    <div className="contact-item flex items-start gap-4">
 
                       <div className="rounded-xl bg-pink-100 p-3">
                         <Mail className="text-pink-500" />
                       </div>
 
-                      <div>
+                      <div className="min-w-0">
+
                         <p className="text-sm text-slate-500">
                           Gmail
                         </p>
 
                         <a
                           href="mailto:robysunjaya9@gmail.com"
-                          className="font-semibold hover:text-pink-500"
+                          className="break-all font-semibold hover:text-pink-500"
                         >
                           robysunjaya9@gmail.com
                         </a>
@@ -90,13 +147,16 @@ export default function Contact() {
 
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    {/* Whatsapp */}
+
+                    <div className="contact-item flex items-start gap-4">
 
                       <div className="rounded-xl bg-pink-100 p-3">
                         <Phone className="text-pink-500" />
                       </div>
 
                       <div>
+
                         <p className="text-sm text-slate-500">
                           WhatsApp
                         </p>
@@ -113,7 +173,9 @@ export default function Contact() {
 
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    {/* Location */}
+
+                    <div className="contact-item flex items-start gap-4">
 
                       <div className="rounded-xl bg-pink-100 p-3">
                         <MapPin className="text-pink-500" />
@@ -146,18 +208,20 @@ export default function Contact() {
                     <a
                       href="https://github.com/robysunjaya20"
                       target="_blank"
-                      className="flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition hover:border-pink-300 hover:bg-pink-50"
+                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
-                      <FaGithub className="text-2xl" />
+                      <FaGithub className="text-3xl" />
 
-                      <div>
+                      <div className="min-w-0">
+
                         <h4 className="font-bold">
                           GitHub
                         </h4>
 
-                        <p className="text-sm text-slate-500">
-                          https://github.com/robysunjaya20
+                        <p className="truncate text-sm text-slate-500">
+                          github.com/robysunjaya20
                         </p>
+
                       </div>
 
                     </a>
@@ -165,18 +229,40 @@ export default function Contact() {
                     <a
                       href="https://www.linkedin.com/in/roby-sunjaya-955798251"
                       target="_blank"
-                      className="flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition hover:border-pink-300 hover:bg-pink-50"
+                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
                     >
-                      <FaLinkedin className="text-2xl text-[#0A66C2]" />
+                      <FaLinkedin className="text-3xl text-[#0A66C2]" />
 
-                      <div>
+                      <div className="min-w-0">
+
                         <h4 className="font-bold">
                           LinkedIn
                         </h4>
 
-                        <p className="text-sm text-slate-500">
-                          https://www.linkedin.com/in/roby-sunjaya-955798251
+                        <p className="truncate text-sm text-slate-500">
+                          linkedin.com/in/roby-sunjaya-955798251
                         </p>
+
+                      </div>
+
+                    </a>
+
+                    <a
+                      href="https://instagram.com/robysunjaya"
+                      target="_blank"
+                      className="contact-item flex items-center gap-4 rounded-2xl border border-slate-200 p-5 transition-all duration-300 hover:border-pink-300 hover:bg-pink-50 hover:-translate-y-1"
+                    >
+                      <FaInstagram className="text-3xl text-[#E4405F]" />
+                      <div>
+
+                        <h4 className="font-bold">
+                          Instagram
+                        </h4>
+
+                        <p className="text-sm text-slate-500">
+                          @robysunjaya
+                        </p>
+
                       </div>
 
                     </a>
@@ -194,10 +280,12 @@ export default function Contact() {
                       bg-pink-500
                       px-8
                       py-4
-                      text-lg
+                      text-base
                       font-semibold
                       text-white
-                      transition
+                      transition-all
+                      duration-300
+                      hover:scale-105
                       hover:bg-pink-600
                     "
                   >

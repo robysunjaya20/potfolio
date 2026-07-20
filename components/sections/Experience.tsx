@@ -1,11 +1,18 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import {
   Briefcase,
   GraduationCap,
   CalendarDays,
   MapPin,
 } from "lucide-react";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
@@ -19,7 +26,7 @@ const experiences = [
       "Melakukan inspeksi kualitas kendaraan sesuai standar Hyundai, memastikan setiap unit memenuhi spesifikasi produksi sebelum dikirim ke pelanggan.",
     achievements: [
       "Quality Inspection kendaraan produksi.",
-      "Problem identification ",
+      "Problem identification.",
       "Berkoordinasi dengan Production dan Engineering.",
       "Membuat laporan hasil inspeksi harian.",
     ],
@@ -34,7 +41,7 @@ const experiences = [
     description:
       "Fokus pada bidang IT Infrastructure, Networking, Web Development, Artificial Intelligence, dan Internet of Things.",
     achievements: [
-      "Membangun berbagai project web menggunakan PHP, Next.js dan Laravel.",
+      "Membangun project menggunakan PHP, Laravel dan Next.js.",
       "Mengembangkan project ESP32 & IoT.",
       "Mempelajari Machine Learning dan Artificial Intelligence.",
       "Aktif mengikuti sertifikasi Cisco Networking Academy.",
@@ -43,31 +50,91 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".experience-header", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.from(".timeline-line", {
+        scaleY: 0,
+        transformOrigin: "top center",
+        duration: 1.5,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+        },
+      });
+
+      gsap.from(".timeline-item", {
+        y: 80,
+        opacity: 0,
+        stagger: 0.25,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 65%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="experience"
-      className="bg-slate-50 py-32"
+    <section
+      ref={sectionRef}
+      id="experience"
+      className="bg-slate-50 py-20 md:py-32"
     >
-      <div className="mx-auto max-w-7xl px-8">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
 
         {/* Header */}
 
-        <div className="text-center">
+        <div className="experience-header text-center">
 
-          <h2 className="mt-4 text-5xl font-black text-slate-900 md:text-6xl">
+          <h2 className="mt-4 text-4xl font-black text-slate-900 sm:text-5xl md:text-6xl">
             Pengalaman{" "}
             <span className="text-pink-500">
               Kerja.
             </span>
           </h2>
+
         </div>
 
         {/* Timeline */}
 
-        <div className="relative mx-auto mt-24 max-w-5xl">
+        <div className="relative mx-auto mt-16 max-w-5xl md:mt-24">
 
           {/* Line */}
 
-          <div className="absolute left-6 top-0 h-full w-[2px] bg-slate-200 md:left-1/2 md:-translate-x-1/2" />
+          <div
+            className="
+              timeline-line
+              absolute
+              left-5
+              top-0
+              h-full
+              w-[3px]
+              rounded-full
+              bg-gradient-to-b
+              from-pink-500
+              to-blue-500
+              md:left-1/2
+              md:-translate-x-1/2
+            "
+          />
 
           {experiences.map((exp, index) => {
             const Icon = exp.icon;
@@ -75,7 +142,7 @@ export default function Experience() {
             return (
               <div
                 key={exp.title}
-                className={`relative mb-20 flex w-full ${
+                className={`timeline-item relative mb-14 flex ${
                   index % 2 === 0
                     ? "md:justify-start"
                     : "md:justify-end"
@@ -87,8 +154,8 @@ export default function Experience() {
                 <div
                   className={`
                     absolute
-                    left-6
-                    top-8
+                    left-5
+                    top-10
                     z-20
                     flex
                     h-12
@@ -97,36 +164,41 @@ export default function Experience() {
                     items-center
                     justify-center
                     rounded-full
+                    shadow-xl
                     ${exp.color}
-                    shadow-lg
                     md:left-1/2
                   `}
                 >
-                  <Icon className="text-white" size={22} />
+                  <Icon
+                    size={22}
+                    className="text-white"
+                  />
                 </div>
 
                 {/* Card */}
 
                 <div
-                  className={`
-                    ml-20
+                  className="
+                    group
+                    ml-14
                     w-full
                     rounded-3xl
                     border
                     border-slate-200
                     bg-white
-                    p-8
+                    p-6
                     shadow-sm
                     transition-all
                     duration-300
                     hover:-translate-y-2
-                    hover:shadow-xl
+                    hover:shadow-2xl
                     md:ml-0
                     md:w-[44%]
-                  `}
+                    md:p-8
+                  "
                 >
 
-                  <span className="inline-block rounded-full bg-pink-100 px-4 py-1 text-sm font-semibold text-pink-600">
+                  <span className="inline-flex rounded-full bg-pink-100 px-4 py-2 text-sm font-semibold text-pink-600">
                     {exp.period}
                   </span>
 
@@ -138,7 +210,7 @@ export default function Experience() {
                     {exp.company}
                   </p>
 
-                  <div className="mt-4 flex flex-wrap gap-6 text-sm text-slate-500">
+                  <div className="mt-5 flex flex-col gap-3 text-sm text-slate-500 sm:flex-row sm:flex-wrap sm:gap-6">
 
                     <div className="flex items-center gap-2">
                       <MapPin size={16} />
@@ -165,7 +237,7 @@ export default function Experience() {
                         className="flex items-start gap-3"
                       >
 
-                        <div className="mt-2 h-2 w-2 rounded-full bg-pink-500" />
+                        <div className="mt-2 h-2.5 w-2.5 rounded-full bg-pink-500" />
 
                         <span className="text-slate-600">
                           {item}

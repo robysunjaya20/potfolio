@@ -2,6 +2,12 @@
 
 import Image from "next/image";
 import SplashCursor from "@/components/animate/SplashCursor";
+import { useLayoutEffect, useRef } from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   ExternalLink,
   ArrowUpRight,
@@ -33,7 +39,7 @@ const projects = [
   },
 
   {
-    title: "Smart Home IoT",
+    title: "SmartLamp IoT",
     description:
       "Monitoring dan kontrol lampu rumah menggunakan ESP32, Blynk, Telegram Bot, dan MQTT.",
 
@@ -63,14 +69,57 @@ const projects = [
       "Tailwind",
     ],
 
-    github: "#",
-    demo: "#",
+    github: "https://github.com/robysunjaya20/potfolio",
+    demo: "https://portfolio-roby-psi.vercel.app/",
   },
 ];
 
 export default function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".project-header", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.utils.toArray(".project-card").forEach((card: any, i) => {
+        gsap.from(card, {
+          x: i % 2 === 0 ? -120 : 120,
+          y: 50,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 80%",
+          },
+        });
+      });
+
+      gsap.from(".project-more", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: ".project-more",
+          start: "top 90%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
   return (
     <section
+      ref={sectionRef}
       id="projects"
       className="bg-white py-32"
     >
@@ -85,7 +134,6 @@ export default function Projects() {
         SHADING
         RAINBOW_MODE={false}
         COLOR="#c23b95"
-        // COLOR="#A855F7"
       />
       <div className="mx-auto max-w-7xl px-8">
 

@@ -1,5 +1,10 @@
 "use client";
 
+import { useLayoutEffect, useRef } from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import TechMarquee from "@/components/animate/TechMarquee";
 
 import {
@@ -27,9 +32,9 @@ import {
   SiArduino,
 } from "react-icons/si";
 
-/* ================================
-   Marquee Row 1
-================================ */
+gsap.registerPlugin(ScrollTrigger);
+
+  //  Marquee Row 1
 
 const marqueeRow1 = [
   {
@@ -62,9 +67,7 @@ const marqueeRow1 = [
   },
 ];
 
-/* ================================
-   Marquee Row 2
-================================ */
+  //  Marquee Row 2
 
 const marqueeRow2 = [
   {
@@ -75,10 +78,7 @@ const marqueeRow2 = [
     icon: <SiMysql className="text-blue-700 text-3xl" />,
     name: "MySQL",
   },
-  {
-    icon: <SiDocker className="text-sky-500 text-3xl" />,
-    name: "Docker",
-  },
+
   {
     icon: <SiLinux className="text-black text-3xl" />,
     name: "Linux",
@@ -93,9 +93,7 @@ const marqueeRow2 = [
   },
 ];
 
-/* ================================
-   Skill Cards
-================================ */
+// Skill Cards
 
 const skills = [
   {
@@ -114,7 +112,6 @@ const skills = [
     icon: Network,
     items: [
       "Cisco",
-      "Mikrotik",
       "TCP/IP",
       "Routing",
       "Switching",
@@ -151,7 +148,6 @@ const skills = [
       "OpenAI",
       "TensorFlow",
       "Whisper",
-      "Ollama",
     ],
   },
   {
@@ -168,17 +164,58 @@ const skills = [
 ];
 
 export default function Skills() {
+
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".skills-header", {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        },
+      });
+
+      gsap.from(".marquee-row", {
+        y: 40,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 72%",
+        },
+      });
+
+      gsap.from(".skill-card", {
+        y: 80,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 68%",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+  
   return (
     <section
+      ref={sectionRef}
       id="skills"
       className="bg-white py-32"
     >
       {/* Header */}
-      <div className="mx-auto max-w-7xl px-8 text-center">
-
-        <p className="uppercase tracking-[0.3em] text-pink-500 font-semibold">
-          KEAHLIAN
-        </p>
+      <div className="skills-header mx-auto max-w-7xl px-5 sm:px-8 text-center">
 
         <h2 className="mt-4 text-5xl font-black text-slate-900 md:text-6xl">
           Keahlian{" "}
@@ -191,27 +228,28 @@ export default function Skills() {
 
       {/* Tech Marquee */}
 
-      <div className="mt-20 space-y-8 overflow-hidden">
+      <div className="mt-12 space-y-5 overflow-hidden md:mt-16 md:space-y-8">
+        <div className="marquee-row">
+          <TechMarquee
+            items={marqueeRow1}
+            direction="left"
+            speed={35}
+          />
+        </div>
 
-        <TechMarquee
-          items={marqueeRow1}
-          direction="left"
-          speed={35}
-        />
-
-        <TechMarquee
-          items={marqueeRow2}
-          direction="right"
-          speed={35}
-        />
-
+        <div className="marquee-row">
+          <TechMarquee
+            items={marqueeRow2}
+            direction="right"
+            speed={35}
+          />
+        </div>
       </div>
 
       {/* Skill Cards */}
 
-      <div className="mx-auto mt-24 max-w-7xl px-8">
-
-        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+      <div className="mx-auto mt-14 max-w-7xl px-5 sm:px-6 lg:px-8 md:mt-20">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
 
           {skills.map((skill) => {
 
@@ -222,35 +260,65 @@ export default function Skills() {
               <div
                 key={skill.title}
                 className="
+                  skill-card
+                  group
                   rounded-3xl
                   border
                   border-slate-200
                   bg-white
-                  p-8
+                  p-6
                   shadow-sm
                   transition-all
                   duration-300
                   hover:-translate-y-2
                   hover:shadow-xl
+                  sm:p-8
                 "
               >
 
+                {/* Header */}
+
                 <div className="flex items-center gap-4">
 
-                  <div className="rounded-xl bg-pink-100 p-3">
+                  <div
+                    className="
+                      flex
+                      h-14
+                      w-14
+                      items-center
+                      justify-center
+                      rounded-2xl
+                      bg-pink-100
+                      transition
+                      group-hover:bg-pink-500
+                    "
+                  >
 
                     <Icon
                       size={28}
-                      className="text-pink-500"
+                      className="
+                        text-pink-500
+                        transition
+                        group-hover:text-white
+                      "
                     />
 
                   </div>
 
-                  <h3 className="text-2xl font-bold text-slate-900">
+                  <h3
+                    className="
+                      text-xl
+                      font-bold
+                      text-slate-900
+                      sm:text-2xl
+                    "
+                  >
                     {skill.title}
                   </h3>
 
                 </div>
+
+                {/* Tags */}
 
                 <div className="mt-8 flex flex-wrap gap-3">
 
@@ -263,12 +331,14 @@ export default function Skills() {
                         bg-slate-100
                         px-4
                         py-2
-                        text-sm
+                        text-xs
                         font-medium
                         text-slate-700
-                        transition
+                        transition-all
+                        duration-300
                         hover:bg-pink-100
                         hover:text-pink-600
+                        sm:text-sm
                       "
                     >
                       {item}
@@ -285,9 +355,11 @@ export default function Skills() {
           })}
 
         </div>
-
       </div>
-
     </section>
   );
 }
+
+
+
+
