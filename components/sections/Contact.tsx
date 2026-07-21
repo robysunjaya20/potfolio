@@ -71,13 +71,6 @@ export default function Contact() {
               Bekerja Sama
             </span>
           </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-slate-600 md:text-lg md:leading-9">
-            Saya terbuka untuk peluang kerja sebagai IT Support,
-            IT Infrastructure, Networking, Web Development,
-            maupun kolaborasi dalam berbagai project teknologi.
-          </p>
-
         </div>
 
         {/* Card */}

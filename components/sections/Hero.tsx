@@ -1,36 +1,19 @@
+import { forwardRef } from "react";
 import Link from "next/link";
 import { Mail, FolderOpen } from "lucide-react";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa6";
 
-import Galaxy from "@/components/Galaxy";
-import ProfileCard from "@/components/ProfileCard";
+import ProfileCard from "@/components/animate/ProfileCard";
 import GradientText from "@/components/animate/GradientText";
-import TextType from "../TextType";
+import TextType from "@/components/animate/TextType";
 
-export default function Hero() {
+const Hero = forwardRef<HTMLElement>((_props, ref) => {
   return (
     <section
+      ref={ref}
       id="home"
       className="relative min-h-screen overflow-hidden bg-black"
     >
-      {/* Galaxy */}
-      <div className="absolute inset-0 -z-10">
-        <Galaxy
-          mouseInteraction
-          mouseRepulsion
-          density={1.3}
-          glowIntensity={0.2}
-          saturation={0}
-          hueShift={210}
-          twinkleIntensity={0.2}
-          rotationSpeed={0.02}
-          repulsionStrength={3}
-          starSpeed={0.4}
-          speed={0.8}
-          transparent
-        />
-      </div>
-
       {/* Glow */}
       <div className="absolute left-1/2 top-40 h-[320px] w-[320px] -translate-x-1/2 rounded-full bg-blue-500/20 blur-[120px] sm:h-[420px] sm:w-[420px] lg:h-[600px] lg:w-[600px]" />
 
@@ -69,7 +52,7 @@ export default function Hero() {
 
           <h1 className="leading-none text-center lg:text-left">
             <GradientText
-              colors={["#5227FF", "#FF9FFC"]}
+              colors={["#5227ff7a", "#ff9ffcc4"]}
               animationSpeed={2}
               showBorder={false}
             >
@@ -109,14 +92,6 @@ export default function Hero() {
             </div>
 
           </div>
-
-          <p className="mx-auto mt-8 max-w-xl text-base leading-8 text-slate-300 sm:text-lg lg:mx-0 lg:max-w-2xl lg:text-xl lg:leading-9">
-            Saya adalah mahasiswa Teknik Informatika Universitas Pelita Bangsa
-            yang bekerja sebagai Assembly Quality Control di PT Hyundai Motor
-            Manufacturing Indonesia dan memiliki ketertarikan pada bidang IT
-            Support, IT Infrastructure, Networking, Web Development, Internet
-            of Things, serta Artificial Intelligence.
-          </p>
 
           {/* SOCIAL */}
           <div className="mt-8 flex justify-center gap-4 lg:justify-start">
@@ -221,11 +196,8 @@ export default function Hero() {
 
         {/* RIGHT */}
         <div className="flex flex-1 justify-center">
-
           <div className="relative w-full max-w-[300px] sm:max-w-[360px] lg:max-w-[430px]">
-
             <div className="absolute inset-0 rounded-[36px] bg-blue-500/20 blur-3xl" />
-
             <div className="relative overflow-hidden rounded-[36px] border border-slate-700 bg-slate-900 p-3 shadow-2xl">
 
               <ProfileCard
@@ -239,7 +211,7 @@ export default function Hero() {
                 showUserInfo={true}
                 enableTilt={true}
                 behindGlowEnabled
-                behindGlowColor="rgba(154,165,183,.45)"
+                behindGlowColor="rgba(174, 183, 197, 0.45)"
                 innerGradient="linear-gradient(145deg,#1e293b 0%,#2563eb44 100%)"
               />
 
@@ -251,4 +223,8 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+});
+
+Hero.displayName = "Hero";
+
+export default Hero;

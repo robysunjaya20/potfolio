@@ -54,39 +54,86 @@ export default function Experience() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".experience-header", {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 75%",
-        },
-      });
+      const items = gsap.utils.toArray<HTMLElement>(".timeline-item");
+      const circles = gsap.utils.toArray<HTMLElement>(".timeline-circle");
 
-      gsap.from(".timeline-line", {
-        scaleY: 0,
-        transformOrigin: "top center",
-        duration: 1.5,
-        ease: "power2.out",
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 70%",
+          once: true,
         },
       });
 
-      gsap.from(".timeline-item", {
-        y: 80,
+      // Header
+      tl.from(".experience-header", {
+        y: 70,
+        scale: 0.92,
         opacity: 0,
-        stagger: 0.25,
+        filter: "blur(10px)",
         duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 65%",
-        },
+        ease: "power4.out",
       });
+
+      // Timeline
+      tl.from(".timeline-line", {
+        scaleY: 0,
+        transformOrigin: "top center",
+        duration: 1.2,
+        ease: "power4.out",
+      });
+
+      // Card 1
+      tl.from(
+        items[0],
+        {
+          x: -120,
+          y: 40,
+          scale: 0.95,
+          opacity: 0,
+          filter: "blur(8px)",
+          duration: 0.8,
+          ease: "power4.out",
+        },
+        "-=0.5"
+      );
+
+      tl.from(
+        circles[0],
+        {
+          scale: 0,
+          duration: 0.4,
+          ease: "back.out(2)",
+        },
+        "<"
+      );
+
+      // Card 2
+      if (items[1]) {
+        tl.from(
+          items[1],
+          {
+            x: 120,
+            y: 40,
+            scale: 0.95,
+            opacity: 0,
+            filter: "blur(8px)",
+            duration: 0.8,
+            ease: "power4.out",
+          },
+          "+=0.15"
+        );
+
+        tl.from(
+          circles[1],
+          {
+            scale: 0,
+            duration: 0.4,
+            ease: "back.out(2)",
+          },
+          "<"
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -126,7 +173,7 @@ export default function Experience() {
               left-5
               top-0
               h-full
-              w-[3px]
+              w-1
               rounded-full
               bg-gradient-to-b
               from-pink-500
@@ -153,6 +200,7 @@ export default function Experience() {
 
                 <div
                   className={`
+                    timeline-circle
                     absolute
                     left-5
                     top-10
@@ -189,9 +237,10 @@ export default function Experience() {
                     p-6
                     shadow-sm
                     transition-all
-                    duration-300
-                    hover:-translate-y-2
-                    hover:shadow-2xl
+                    duration-500
+                    hover:-translate-y-3
+                    hover:scale-[1.02]
+                    hover:shadow-[0_25px_60px_rgba(0,0,0,.12)]
                     md:ml-0
                     md:w-[44%]
                     md:p-8

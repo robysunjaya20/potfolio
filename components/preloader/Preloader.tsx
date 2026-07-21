@@ -10,34 +10,32 @@ interface PreloaderProps {
 export default function Preloader({
   onFinish,
 }: PreloaderProps) {
-  const container = useRef<HTMLDivElement>(null);
   const text = useRef<HTMLHeadingElement>(null);
+
+  const leftPanel = useRef<HTMLDivElement>(null);
+  const rightPanel = useRef<HTMLDivElement>(null);
+  const centerLine = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const tl = gsap.timeline({
-      onComplete: () => {
-        gsap.to(container.current, {
-          opacity: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          onComplete: onFinish,
-        });
+      defaults: {
+        ease: "power4.out",
       },
     });
 
-    //----------------------------------
     // Slide 1
-    //----------------------------------
 
     tl.fromTo(
       text.current,
       {
         opacity: 0,
         y: 60,
+        filter: "blur(12px)",
       },
       {
         opacity: 1,
         y: 0,
+        filter: "blur(0px)",
         duration: 0.4,
       }
     );
@@ -47,20 +45,19 @@ export default function Preloader({
     tl.to(text.current, {
       opacity: 0,
       y: -40,
-      duration: 0.4,
+      filter: "blur(12px)",
+      duration: 0.3,
     });
 
-    //----------------------------------
     // Slide 2
-    //----------------------------------
 
     tl.call(() => {
-      if (text.current) {
-        text.current.innerHTML = `
+      if (!text.current) return;
+
+      text.current.innerHTML = `
         ROBY SUNJAYA<br/>
         <span class="text-pink-500">PORTFOLIO</span>
-        `;
-      }
+      `;
     });
 
     tl.fromTo(
@@ -68,29 +65,35 @@ export default function Preloader({
       {
         opacity: 0,
         y: 40,
+        scale: 0.95,
+        filter: "blur(12px)",
       },
       {
         opacity: 1,
         y: 0,
-        duration: 0.5,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 0.4,
       }
     );
 
-    tl.to({}, { duration: 0.5 });
+    tl.to({}, { duration: 0.4 });
 
     tl.to(text.current, {
       opacity: 0,
       y: -40,
-      duration: 0.5,
+      filter: "blur(12px)",
+      duration: 0.3,
     });
 
     // Slide 3
+
     tl.call(() => {
-      if (text.current) {
-        text.current.innerHTML = `
-        ロビー・サンジャヤ
-        `;
-      }
+      if (!text.current) return;
+
+      text.current.innerHTML = `
+        ロビ サンジャヤ
+      `;
     });
 
     tl.fromTo(
@@ -98,52 +101,168 @@ export default function Preloader({
       {
         opacity: 0,
         scale: 0.9,
+        filter: "blur(12px)",
       },
       {
         opacity: 1,
         scale: 1,
+        filter: "blur(0px)",
+        duration: 0.4,
+      }
+    );
+
+    tl.to({}, { duration: 0.4 });
+
+    tl.to(text.current, {
+      opacity: 0,
+      scale: 0.85,
+      duration: 0.4,
+    });
+
+    // Center Line
+
+    tl.fromTo(
+      centerLine.current,
+      {
+        opacity: 0,
+        scaleY: 0,
+      },
+      {
+        opacity: 1,
+        scaleY: 1,
         duration: 0.3,
       }
     );
 
-    tl.to({}, { duration: 0.3 });
+    // Curtain Reveal
 
-    tl.to(text.current, {
-      opacity: 0,
-      scale: 1.1,
-      duration: 0.3,
+    tl.to(
+      leftPanel.current,
+      {
+        xPercent: -100,
+        duration: 1,
+        ease: "power4.inOut",
+      },
+      "+=0.1"
+    );
+
+    tl.to(
+      rightPanel.current,
+      {
+        xPercent: 100,
+        duration: 1,
+        ease: "power4.inOut",
+      },
+      "<"
+    );
+
+    tl.to(
+      centerLine.current,
+      {
+        opacity: 0,
+        duration: 0.3,
+      },
+      "<"
+    );
+
+    tl.to({}, { duration: 0.15 });
+
+    tl.call(() => {
+      onFinish();
     });
+
+    return () => {
+      tl.kill();
+    };
   }, [onFinish]);
 
   return (
     <div
-      ref={container}
       className="
-      fixed
-      inset-0
-      z-[9999]
-      flex
-      items-center
-      justify-center
-      bg-black
-      text-white
-    "
-    >
-      <h1
-        ref={text}
-        className="
-        text-center
-        text-5xl
-        font-black
-        leading-tight
-        md:text-7xl
-        tracking-wider
+        fixed
+        inset-0
+        z-[9999]
+        overflow-hidden
+        pointer-events-none
       "
+    >
+      {/* Left Curtain */}
+
+      <div
+        ref={leftPanel}
+        className="
+          absolute
+          inset-y-0
+          left-0
+          w-1/2
+          bg-black
+          z-10
+        "
+      />
+
+      {/* Right Curtain */}
+
+      <div
+        ref={rightPanel}
+        className="
+          absolute
+          inset-y-0
+          right-0
+          w-1/2
+          bg-black
+          z-10
+        "
+      />
+
+      {/* Center Glow Line */}
+
+      <div
+        ref={centerLine}
+        className="
+          absolute
+          left-1/2
+          top-0
+          h-full
+          w-px
+          -translate-x-1/2
+          bg-pink-500
+          opacity-0
+          z-20
+          shadow-[0_0_30px_#ec4899]
+        "
+      />
+
+      {/* Text */}
+
+      <div
+        className="
+          absolute
+          inset-0
+          z-30
+          flex
+          items-center
+          justify-center
+        "
       >
-        WELCOME
-        <br />
-        <span className="text-pink-500">TO</span>
-      </h1>
+        <h1
+          ref={text}
+          className="
+            text-center
+            text-5xl
+            font-black
+            leading-tight
+            tracking-[0.15em]
+            text-white
+            md:text-7xl
+          "
+        >
+          WELCOME
+          <br />
+          <span className="text-pink-500">
+            TO
+          </span>
+        </h1>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Lenis from "@studio-freight/lenis";
 import gsap from "gsap";
@@ -23,9 +23,17 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(true);
+
+  const heroRef = useRef<HTMLElement>(null);
+  const aboutRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (loading) return;
+
+    // ======================
+    // LENIS
+    // ======================
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -35,65 +43,133 @@ export default function Home() {
       lerp: 0.08,
     });
 
-    let rafId: number;
+    lenis.on("scroll", ScrollTrigger.update);
 
     const raf = (time: number) => {
-      lenis.raf(time);
-      ScrollTrigger.update();
-      rafId = requestAnimationFrame(raf);
+      lenis.raf(time * 1000);
     };
 
-    rafId = requestAnimationFrame(raf);
+    gsap.ticker.add(raf);
+    gsap.ticker.lagSmoothing(0);
 
-    lenis.on("scroll", ScrollTrigger.update);
+    // ======================
+    // GSAP
+    // ======================
+
+    const ctx = gsap.context(() => {
+      // Hero Pin
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: "+=30%",
+        pin: true,
+        pinSpacing: false,
+        scrub: true,
+      });
+
+      // About Reveal
+      gsap.fromTo(
+        aboutRef.current,
+        {
+          yPercent: 20,
+        },
+        {
+          yPercent: 10,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: "top top",
+            end: "+=80%",
+            scrub: true,
+          },
+        }
+      );
+
+      // Hero Scale
+      gsap.to(heroRef.current, {
+        scale: 0.99,
+        opacity: 0.5,
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "+=80%",
+          scrub: true,
+        },
+      });
+
+      // ======================
+      // Hero Intro
+      // ======================
+
+      gsap.from(heroRef.current, {
+        opacity: 0,
+        scale: 1.05,
+        duration: 1.2,
+        ease: "power4.out",
+      });
+    });
 
     ScrollTrigger.refresh();
 
     return () => {
-      cancelAnimationFrame(rafId);
+      ctx.revert();
+
       lenis.destroy();
+
+      gsap.ticker.remove(raf);
     };
   }, [loading]);
 
   return (
     <>
-      {loading ? (
-        <Preloader onFinish={() => setLoading(false)} />
-      ) : (
-        <>
-          <Navbar />
+      {/* ======================
+          PRELOADER
+      ====================== */}
 
-          <main className="relative overflow-x-hidden bg-black">
-            <Hero />
+      {showPreloader && (
+        <Preloader
+          onFinish={() => {
+            setLoading(false);
 
-            <section id="about">
-              <About />
-            </section>
-
-            <section id="skills">
-              <Skills />
-            </section>
-
-            <section id="certificates">
-              <Certificates />
-            </section>
-
-            <section id="experience">
-              <Experience />
-            </section>
-
-            <section id="projects">
-              <Projects />
-            </section>
-
-            <section id="contact">
-              <Contact />
-            </section>
-          </main>
-
-          <Footer />
-        </>
+            setTimeout(() => {
+              setShowPreloader(false);
+            }, 200);
+          }}
+        />
       )}
+
+      {/* ======================
+          WEBSITE
+      ====================== */}
+
+      <div
+        className={`
+          transition-opacity
+          duration-700
+          ${loading ? "opacity-0" : "opacity-100"}
+        `}
+      >
+        <Navbar />
+
+        <main className="relative overflow-x-hidden bg-black">
+          <Hero ref={heroRef} />
+
+          <About ref={aboutRef} />
+
+          <Skills />
+
+          <Certificates />
+
+          <Experience />
+
+          <Projects />
+
+          <Contact />
+        </main>
+
+        <Footer />
+      </div>
     </>
   );
 }

@@ -54,40 +54,100 @@ export default function Certificates() {
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".cert-header", {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
+      const cards = gsap.utils.toArray<HTMLElement>(".certificate-card");
+
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 75%",
+          start: "top 70%",
+          once: true,
         },
       });
 
-      gsap.from(".cert-description", {
+      // Header
+      tl.from(".cert-header", {
+        y: 70,
+        scale: 0.9,
+        opacity: 0,
+        filter: "blur(10px)",
+        duration: 1,
+        ease: "power4.out",
+      });
+
+      // Card 1
+      tl.from(cards[0], {
+        x: -120,
         y: 40,
+        scale: 0.92,
         opacity: 0,
-        duration: 1,
-        delay: 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 72%",
-        },
+        filter: "blur(8px)",
+        duration: 0.8,
+        ease: "power4.out",
       });
 
-      gsap.from(".certificate-card", {
-        y: 80,
-        opacity: 0,
-        stagger: 0.15,
-        duration: 0.9,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 68%",
+      // Card 2
+      tl.from(
+        cards[1],
+        {
+          x: 120,
+          y: 40,
+          scale: 0.92,
+          opacity: 0,
+          filter: "blur(8px)",
+          duration: 0.8,
+          ease: "power4.out",
         },
-      });
+        "+=0.15"
+      );
+
+      // Card 3
+      tl.from(
+        cards[2],
+        {
+          x: -120,
+          y: 40,
+          scale: 0.92,
+          opacity: 0,
+          filter: "blur(8px)",
+          duration: 0.8,
+          ease: "power4.out",
+        },
+        "+=0.15"
+      );
+
+      // Card 4
+      if (cards[3]) {
+        tl.from(
+          cards[3],
+          {
+            x: 120,
+            y: 40,
+            scale: 0.92,
+            opacity: 0,
+            filter: "blur(8px)",
+            duration: 0.8,
+            ease: "power4.out",
+          },
+          "+=0.15"
+        );
+      }
+
+      // Card 5
+      if (cards[4]) {
+        tl.from(
+          cards[4],
+          {
+            x: -120,
+            y: 40,
+            scale: 0.92,
+            opacity: 0,
+            filter: "blur(8px)",
+            duration: 0.8,
+            ease: "power4.out",
+          },
+          "+=0.15"
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -108,16 +168,9 @@ export default function Certificates() {
           <h2 className="cert-header mt-4 text-4xl font-black text-slate-900 sm:text-5xl md:text-6xl">
             Sertifikat{" "}
             <span className="text-pink-500">
-              & Penghargaan.
+              & Pelatihan.
             </span>
           </h2>
-
-          <p className="cert-description mx-auto mt-8 max-w-3xl text-base leading-8 text-slate-600 md:text-lg md:leading-9">
-            Sertifikat profesional yang saya peroleh dari Google,
-            Coursera dan Cisco Networking Academy sebagai bukti
-            kompetensi di bidang IT Support, Networking,
-            Artificial Intelligence dan Internet of Things.
-          </p>
 
         </div>
 
@@ -133,8 +186,8 @@ export default function Certificates() {
             >
               <ElectricBorder
                 color="#603cb3"
-                speed={1}
-                chaos={0.15}
+                speed={0.7}
+                chaos={0.08}
                 style={{ borderRadius: 24 }}
               >
 
@@ -142,7 +195,7 @@ export default function Certificates() {
                   href={cert.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block overflow-hidden rounded-3xl bg-white"
+                  className="group block overflow-hidden rounded-3xl bg-white transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]"
                 >
 
                   {/* Image */}
@@ -154,9 +207,9 @@ export default function Certificates() {
                       alt={cert.title}
                       fill
                       sizes="(max-width:768px) 100vw,
-                             (max-width:1280px) 50vw,
-                             33vw"
-                      className="object-cover transition duration-500 group-hover:scale-105"
+                            (max-width:1280px) 50vw,
+                            33vw"
+                      className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[1deg]"
                     />
 
                     <div
@@ -215,12 +268,15 @@ export default function Certificates() {
                         mt-5
                         inline-flex
                         rounded-full
-                        bg-pink-100
+                        border
+                        border-pink-200
+                        bg-pink-50
                         px-4
                         py-2
                         text-sm
-                        font-medium
+                        font-semibold
                         text-pink-600
+                        shadow-sm
                       "
                     >
                       {cert.year}

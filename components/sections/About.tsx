@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { forwardRef, useLayoutEffect, useRef } from "react";
 import Image from "next/image";
 import { Download } from "lucide-react";
 
@@ -9,8 +9,17 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function About() {
+const About = forwardRef<HTMLElement>((_props, ref) => {
   const sectionRef = useRef<HTMLElement>(null);
+  const setRefs = (node: HTMLElement | null) => {
+  sectionRef.current = node;
+
+  if (typeof ref === "function") {
+    ref(node);
+  } else if (ref) {
+    ref.current = node;
+  }
+};
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
@@ -78,7 +87,7 @@ export default function About() {
 
   return (
     <section
-      ref={sectionRef}
+      ref={setRefs}
       id="about"
       className="relative overflow-hidden bg-white py-20 md:py-32"
     >
@@ -193,4 +202,8 @@ export default function About() {
       </div>
     </section>
   );
-}
+});
+
+About.displayName = "About";
+
+export default About;
