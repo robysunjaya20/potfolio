@@ -36,7 +36,7 @@ export default function Preloader({
         opacity: 1,
         y: 0,
         filter: "blur(0px)",
-        duration: 0.4,
+        duration: 0.3,
       }
     );
 
@@ -46,7 +46,7 @@ export default function Preloader({
       opacity: 0,
       y: -40,
       filter: "blur(12px)",
-      duration: 0.3,
+      duration: 0.2,
     });
 
     // Slide 2
@@ -73,11 +73,11 @@ export default function Preloader({
         y: 0,
         scale: 1,
         filter: "blur(0px)",
-        duration: 0.4,
+        duration: 0.3,
       }
     );
 
-    tl.to({}, { duration: 0.4 });
+    tl.to({}, { duration: 0.3 });
 
     tl.to(text.current, {
       opacity: 0,
@@ -92,7 +92,7 @@ export default function Preloader({
       if (!text.current) return;
 
       text.current.innerHTML = `
-        ロビ サンジャヤ
+        ロビサンジャヤ
       `;
     });
 
@@ -100,7 +100,7 @@ export default function Preloader({
       text.current,
       {
         opacity: 0,
-        scale: 0.9,
+        scale: 1.05,
         filter: "blur(12px)",
       },
       {
@@ -109,60 +109,6 @@ export default function Preloader({
         filter: "blur(0px)",
         duration: 0.4,
       }
-    );
-
-    tl.to({}, { duration: 0.4 });
-
-    tl.to(text.current, {
-      opacity: 0,
-      scale: 0.85,
-      duration: 0.4,
-    });
-
-    // Center Line
-
-    tl.fromTo(
-      centerLine.current,
-      {
-        opacity: 0,
-        scaleY: 0,
-      },
-      {
-        opacity: 1,
-        scaleY: 1,
-        duration: 0.3,
-      }
-    );
-
-    // Curtain Reveal
-
-    tl.to(
-      leftPanel.current,
-      {
-        xPercent: -100,
-        duration: 1,
-        ease: "power4.inOut",
-      },
-      "+=0.1"
-    );
-
-    tl.to(
-      rightPanel.current,
-      {
-        xPercent: 100,
-        duration: 1,
-        ease: "power4.inOut",
-      },
-      "<"
-    );
-
-    tl.to(
-      centerLine.current,
-      {
-        opacity: 0,
-        duration: 0.3,
-      },
-      "<"
     );
 
     tl.to({}, { duration: 0.15 });
@@ -211,24 +157,6 @@ export default function Preloader({
           w-1/2
           bg-black
           z-10
-        "
-      />
-
-      {/* Center Glow Line */}
-
-      <div
-        ref={centerLine}
-        className="
-          absolute
-          left-1/2
-          top-0
-          h-full
-          w-px
-          -translate-x-1/2
-          bg-pink-500
-          opacity-0
-          z-20
-          shadow-[0_0_30px_#ec4899]
         "
       />
 

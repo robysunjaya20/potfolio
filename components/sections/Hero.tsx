@@ -74,12 +74,11 @@ const Hero = forwardRef<HTMLElement>((_props, ref) => {
               <TextType
                 className="text-lg font-bold text-black sm:text-2xl lg:text-4xl"
                 text={[
-                  "IT Support",
-                  "IT Infrastructure",
-                  "Networking",
-                  "Full Stack Web Developer",
-                  "Internet of Things",
-                  "Artificial Intelligence",
+                  "IT Support ",
+                  "IT Operations ",
+                  "Networking  ",
+                  "Full Stack Web Developer ",
+                  "Internet of Things ",
                 ]}
                 typingSpeed={80}
                 deletingSpeed={40}

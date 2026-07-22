@@ -46,7 +46,7 @@ export default function Home() {
     lenis.on("scroll", ScrollTrigger.update);
 
     const raf = (time: number) => {
-      lenis.raf(time * 1000);
+      lenis.raf(time * 500);
     };
 
     gsap.ticker.add(raf);
